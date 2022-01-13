@@ -12,6 +12,13 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../fonts/gilroy/gilroy-medium.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
 body {
   margin: 0;
   font-size: 16px;
