@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import footerNav from '../data/footerNav';
+import footerContent from '../data/headerContent';
 
 export default function Footer() {
   return (
@@ -14,6 +15,7 @@ export default function Footer() {
           </MenuItem>
         ))}
       </Menu>
+      <Title>{footerContent.name}</Title>
     </Container>
   );
 }
@@ -24,8 +26,11 @@ const Container = styled.footer`
   justify-content: center;
   padding: 15px;
   background-color: #e3e0d4;
+  background-image: url(./img/footer.png);
   background-size: cover;
   background-position: center;
+  position: relative;
+  box-sizing: border-box;
 `;
 
 const Menu = styled.ul`
@@ -61,4 +66,14 @@ const MenuItem = styled.li`
       font-size: 23px;
     }
   }
+`;
+
+const Title = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Josefin Slab;
+  font-size: clamp(60px, 10vw, 180px);
+  color: #fff;
 `;
