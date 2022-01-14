@@ -14,7 +14,7 @@ export default function Header() {
       <SocialMediaMenu>
         {socialMedia.map((socialIcon) => (
           <SocialIcon key={socialIcon.href} href={socialIcon.href}>
-            {socialIcon.icon}
+            <img src={socialIcon.icon} alt={socialIcon.name} />
           </SocialIcon>
         ))}
       </SocialMediaMenu>
@@ -92,6 +92,18 @@ const SocialMediaMenu = styled.ul`
 const SocialIcon = styled.a`
   text-decoration: none;
   color: #fff;
+  width: 24px;
+  height: 24px;
+  margin-right: 34px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const ButtonContainer = styled.div`
