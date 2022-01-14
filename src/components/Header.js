@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import MainMenu from './Menu';
+import Button from './Button';
+
 import headerContent from '../data/headerContent';
-import headerNav from '../data/headerNav';
 import socialMedia from '../data/socialMedia';
 
 export default function Header() {
@@ -22,23 +24,10 @@ export default function Header() {
           <Title>{headerContent.title}</Title>
           <Name>{headerContent.name}</Name>
         </SiteTitle>
-        <Menu>
-          {headerNav.map((navItem) => (
-            <MenuItem key={navItem.linkText}>
-              <NavLink
-                to={navItem.href}
-                style={(isActive) =>
-                  isActive ? { fontWeight: 'bold' } : { fontWeight: 'normal' }
-                }
-              >
-                {navItem.linkText}
-              </NavLink>
-            </MenuItem>
-          ))}
-        </Menu>
+        <MainMenu />
       </section>
       <ButtonContainer>
-        <Button to={headerContent.contact.href}>
+        <Button href={headerContent.contact.href}>
           {headerContent.contact.linkText}
         </Button>
       </ButtonContainer>
@@ -52,6 +41,10 @@ const Container = styled.header`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 1349px) {
+    justify-content: center;
+  }
 `;
 
 const SiteTitle = styled(Link)`
@@ -90,6 +83,10 @@ const SocialMediaMenu = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1349px) {
+    display: none;
+  }
 `;
 
 const SocialIcon = styled.a`
@@ -102,42 +99,8 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-`;
 
-const Button = styled(Link)`
-  background-color: #fff;
-  border-radius: 38px;
-  font-size: 16px;
-  font-family: Gilroy;
-  line-height: 19px;
-  letter-spacing: 1.6px;
-  color: #be9ea4;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 28px 33px 26px 33px;
-`;
-
-const Menu = styled.ul`
-  display: flex;
-  justify-content: center;
-  margin: 17px 0 7px 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style-type: none;
-  width: 100%;
-`;
-
-const MenuItem = styled.li`
-  box-sizing: border-box;
-  padding: 19px;
-
-  a {
-    text-decoration: none;
-    color: #fff;
-    font-family: Gilroy;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  @media (max-width: 1349px) {
+    display: none;
   }
 `;
