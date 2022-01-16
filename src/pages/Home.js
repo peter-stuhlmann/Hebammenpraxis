@@ -1,11 +1,11 @@
 import React from 'react';
 
-import FlexLayout from './FlexLayout';
-import CenteredTextBox from './CenteredTextBox';
-import ImageBanner from './ImageBanner';
-import FAQ from './FAQ';
-import Table from './Table';
-import Services from './Services';
+import FlexLayout from '../components/FlexLayout';
+import CenteredTextBox from '../components/CenteredTextBox';
+import ImageBanner from '../components/ImageBanner';
+import FAQ from '../components/FAQ';
+import Table from '../components/Table';
+import Services from '../components/Services';
 
 import home from '../data/home';
 
