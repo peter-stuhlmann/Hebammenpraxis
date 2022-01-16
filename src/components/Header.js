@@ -109,7 +109,7 @@ const SocialIcon = styled.a`
 const ButtonContainer = styled.div`
   flex: 0 0 20%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 
   @media (max-width: 1349px) {
