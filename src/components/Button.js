@@ -1,17 +1,31 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export default function Button(props) {
   const { children, className, href, onClick, style } = props;
 
-  return (
-    <LinkButton to={href} className={className} onClick={onClick} style={style}>
+  return href.startsWith('http') ? (
+    <ExtLinkButton
+      href={href}
+      className={className}
+      onClick={onClick}
+      style={style}
+    >
       {children}
-    </LinkButton>
+    </ExtLinkButton>
+  ) : (
+    <IntLinkButton
+      to={href}
+      className={className}
+      onClick={onClick}
+      style={style}
+    >
+      {children}
+    </IntLinkButton>
   );
 }
 
-const LinkButton = styled(Link)`
+const baseStyles = css`
   background-color: #fff;
   border-radius: 38px;
   font-size: 16px;
@@ -22,4 +36,13 @@ const LinkButton = styled(Link)`
   text-decoration: none;
   text-transform: uppercase;
   padding: 28px 33px 26px 33px;
+  display: inline-block;
+`;
+
+const IntLinkButton = styled(Link)`
+  ${baseStyles}
+`;
+
+const ExtLinkButton = styled.a`
+  ${baseStyles}
 `;
