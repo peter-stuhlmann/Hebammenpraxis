@@ -35,12 +35,13 @@ const Container = styled.footer`
 
 const Menu = styled.ul`
   display: flex;
-  justify-content: space-around;
-  margin: 90px 0 0 0;
-  padding: 0;
+  justify-content: space-between;
+  margin: 75px 0 0 0;
+  padding: 15px;
   box-sizing: border-box;
   list-style-type: none;
   width: 100%;
+  max-width: 1670px;
 
   @media (max-width: 480px) {
     flex-direction: column;

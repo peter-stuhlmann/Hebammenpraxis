@@ -11,36 +11,49 @@ import socialMedia from '../data/socialMedia';
 export default function Header() {
   return (
     <Container>
-      <SocialMediaMenu>
-        {socialMedia.map((socialIcon) => (
-          <SocialIcon key={socialIcon.href} href={socialIcon.href}>
-            <img src={socialIcon.icon} alt={socialIcon.name} />
-          </SocialIcon>
-        ))}
-      </SocialMediaMenu>
-      <section>
-        <SiteTitle to="/">
-          <Logo src={headerContent.logo} alt="Logo" width="110" height="153" />
-          <Title>{headerContent.title}</Title>
-          <Name>{headerContent.name}</Name>
-        </SiteTitle>
-        <MainMenu />
-      </section>
-      <ButtonContainer>
-        <Button href={headerContent.contact.href}>
-          {headerContent.contact.linkText}
-        </Button>
-      </ButtonContainer>
+      <Wrapper>
+        <SocialMediaMenu>
+          {socialMedia.map((socialIcon) => (
+            <SocialIcon key={socialIcon.href} href={socialIcon.href}>
+              <img src={socialIcon.icon} alt={socialIcon.name} />
+            </SocialIcon>
+          ))}
+        </SocialMediaMenu>
+        <section>
+          <SiteTitle to="/">
+            <Logo
+              src={headerContent.logo}
+              alt="Logo"
+              width="110"
+              height="153"
+            />
+            <Title>{headerContent.title}</Title>
+            <Name>{headerContent.name}</Name>
+          </SiteTitle>
+          <MainMenu />
+        </section>
+        <ButtonContainer>
+          <Button href={headerContent.contact.href}>
+            {headerContent.contact.linkText}
+          </Button>
+        </ButtonContainer>
+      </Wrapper>
     </Container>
   );
 }
 
 const Container = styled.header`
-  padding: 15px;
   background-color: #8e9b92;
+`;
+
+const Wrapper = styled.div`
+  padding: 15px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  max-width: 1670px;
+  margin: 0 auto;
 
   @media (max-width: 1349px) {
     justify-content: center;
@@ -82,7 +95,7 @@ const SocialMediaMenu = styled.ul`
   flex: 0 0 20%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   @media (max-width: 1349px) {
     display: none;
@@ -109,7 +122,7 @@ const SocialIcon = styled.a`
 const ButtonContainer = styled.div`
   flex: 0 0 20%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 
   @media (max-width: 1349px) {
