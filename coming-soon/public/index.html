@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#8E9B92" />
+    <title>Hebammenpraxis</title>
+  </head>
+  <body>
+    <noscript>Um diese Webseite ansehen zu können müssen Sie das Ausführen von JavaScript in Ihren Browesereinstellungen aktivieren.</noscript>
+    <div id="root"></div>
+
+    <script>
+      // detect if browser is internet explorer
+      const isIE = /*@cc_on!@*/ false || !!document.documentMode;
+      if (isIE) {
+        const script = document.createElement('script');
+        script.src='/ie.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Josefin Slab';
+  src: url('../fonts/josefin-slab/josefin-slab-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  font-family: 'Josefin Slab';
+}
