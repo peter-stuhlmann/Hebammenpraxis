@@ -101,7 +101,6 @@ const ListItem = styled.li`
 `;
 
 const CustomizedButton = styled(Button)`
-  display: inline-block;
   margin-top: 183px;
 
   @media (max-width: 768px) {

@@ -21,6 +21,7 @@ const Container = styled.section`
   background-color: #a49194;
   display: flex;
   flex-direction: column;
+  border-bottom: 2px solid #fff;
 `;
 
 const Heading = styled.h2`
