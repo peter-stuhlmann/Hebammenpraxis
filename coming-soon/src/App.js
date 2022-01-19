@@ -1,16 +1,13 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
 
 import './assets/css/global.css';
 
-import Router from './components/Router';
+const Home = lazy(() => import('./components/Home'));
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={'Inhalt wird geladen...'}>
-        <Router />
-      </Suspense>
-    </BrowserRouter>
+    <Suspense fallback={'Inhalt wird geladen...'}>
+      <Home />
+    </Suspense>
   );
 }
