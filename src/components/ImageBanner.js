@@ -2,7 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function ImageBanner(props) {
-  const { content, height, large, width, backgroundPosition, margin } = props;
+  const {
+    content,
+    height,
+    large,
+    width,
+    backgroundPosition,
+    margin,
+    textWidth,
+  } = props;
 
   return (
     <Container
@@ -14,7 +22,11 @@ export default function ImageBanner(props) {
       margin={margin}
     >
       <PreText dangerouslySetInnerHTML={{ __html: content.preText }} />
-      <Text large={large} dangerouslySetInnerHTML={{ __html: content.text }} />
+      <Text
+        large={large}
+        textWidth={textWidth}
+        dangerouslySetInnerHTML={{ __html: content.text }}
+      />
     </Container>
   );
 }
@@ -58,6 +70,6 @@ const Text = styled.p`
     props.large ? 'clamp(48px, 5vw, 96px)' : 'clamp(42px, 5vw, 85px)'};
   color: #fff;
   width: 100%;
-  max-width: ${(props) => (props.large ? '600px' : '1350px')};
+  max-width: ${(props) => (props.textWidth ? props.textWidth : '1350px')};
   margin: 0;
 `;

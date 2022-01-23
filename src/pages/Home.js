@@ -14,6 +14,7 @@ export default function Home() {
     <>
       <ImageBanner
         large
+        textWidth="600px"
         content={home.imgBanner[0]}
         backgroundPosition="bottom center"
       />
