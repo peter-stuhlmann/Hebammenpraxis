@@ -6,11 +6,12 @@ import './assets/css/global.css';
 import Header from './components/Header';
 import Router from './components/Router';
 import Footer from './components/Footer';
+import LoadingSpinner from './components/LoadingSpinner';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={'Loading...'}>
+      <Suspense fallback={<LoadingSpinner />}>
         <Header />
         <Router />
         <Footer />
