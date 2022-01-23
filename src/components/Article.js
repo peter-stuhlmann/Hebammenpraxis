@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from './Button';
 
 export default function Article(props) {
-  const { content, alternate } = props;
+  const { content, alternate, buttonColor } = props;
 
   return (
     <Container alternate={alternate}>
@@ -17,10 +18,19 @@ export default function Article(props) {
           </ImageContainer>
         )}
         <Content>
-          <Author>{content.author}</Author>
-          <Title>{content.title}</Title>
-          <Intro>{content.intro}</Intro>
-          <Text>{content.text}</Text>
+          {content.author && <Author>{content.author}</Author>}
+          {content.title && <Title>{content.title}</Title>}
+          {content.intro && <Intro>{content.intro}</Intro>}
+          {content.text && <Text>{content.text}</Text>}
+          {content.button && (
+            <Button
+              href={content.button.href}
+              color={buttonColor}
+              style={{ marginTop: '50px' }}
+            >
+              {content.button.linkText}
+            </Button>
+          )}
         </Content>
         {content.img.right && (
           <ImageContainer>

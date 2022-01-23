@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 import Button from './Button';
@@ -15,14 +15,21 @@ export default function Services(props) {
         </ImageContainer>
         <ContentBox>
           <Content>
-            <List>
-              {content.description.map((listItem) => (
-                <ListItem
-                  key={listItem}
-                  dangerouslySetInnerHTML={{ __html: listItem }}
-                />
-              ))}
-            </List>
+            {content.description.map((section, index) => (
+              <Fragment key={index}>
+                {section.heading && <Title>{section.heading}</Title>}
+                {section.list && (
+                  <List>
+                    {section.list.map((listItem) => (
+                      <ListItem
+                        key={listItem}
+                        dangerouslySetInnerHTML={{ __html: listItem }}
+                      />
+                    ))}
+                  </List>
+                )}
+              </Fragment>
+            ))}
             <CustomizedButton href={content.button.href}>
               {content.button.linkText}
             </CustomizedButton>
@@ -82,6 +89,16 @@ const Content = styled.div`
   box-sizing: border-box;
 `;
 
+const Title = styled.span`
+  font-family: Gilroy;
+  font-size: clamp(18px, 5vw, 22px);
+  line-height: clamp(25px, 5vw, 30px);
+  letter-spacing: 2.2px;
+  color: #37322c;
+  display: inline-block;
+  margin: 40px 0 6px 0;
+`;
+
 const List = styled.ul`
   margin: 0 0 0 20px;
   padding: 0;
@@ -98,12 +115,9 @@ const ListItem = styled.li`
   letter-spacing: 2.2px;
   color: #37322c;
   padding-inline-start: 0;
+  margin: 6px 0;
 `;
 
 const CustomizedButton = styled(Button)`
-  margin-top: 183px;
-
-  @media (max-width: 768px) {
-    margin-top: 100px;
-  }
+  margin-top: 100px;
 `;
