@@ -12,10 +12,20 @@ import home from '../data/home';
 export default function Home() {
   return (
     <>
-      <ImageBanner large content={home.imgBanner[0]} />
+      <ImageBanner
+        large
+        content={home.imgBanner[0]}
+        backgroundPosition="bottom center"
+      />
       <CenteredTextBox content={home.centeredTextBox} />
       <FlexLayout content={home.flexLayout} />
-      <ImageBanner content={home.imgBanner[1]} height="657px" width="1640px" />
+      <ImageBanner
+        content={home.imgBanner[1]}
+        height="657px"
+        width="1640px"
+        backgroundPosition="bottom center"
+        margin="0 auto 374px auto"
+      />
       <Services content={home.services} />
       <Table content={home.news} />
       <FAQ content={home.faq} />

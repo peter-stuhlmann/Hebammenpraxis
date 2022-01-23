@@ -6,14 +6,26 @@ export default function CenteredTextBox(props) {
 
   return (
     <Container>
-      <Heading dangerouslySetInnerHTML={{ __html: content.heading }} />
-      <Text dangerouslySetInnerHTML={{ __html: content.text }} />
-      <Image
-        src={content.img.src}
-        width="114"
-        height="111"
-        alt={content.img.description}
-      />
+      {content.heading && (
+        <Heading dangerouslySetInnerHTML={{ __html: content.heading }} />
+      )}
+      {content.text && (
+        <Text dangerouslySetInnerHTML={{ __html: content.text }} />
+      )}
+      {content.subText && (
+        <Text
+          dangerouslySetInnerHTML={{ __html: content.subText }}
+          style={{ color: '#E3E0D4' }}
+        />
+      )}
+      {content.img && (
+        <Image
+          src={content.img.src}
+          width="114"
+          height="111"
+          alt={content.img.description}
+        />
+      )}
     </Container>
   );
 }

@@ -2,14 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function ImageBanner(props) {
-  const { content, height, large, width } = props;
+  const { content, height, large, width, backgroundPosition, margin } = props;
 
   return (
     <Container
       backgroundImage={content.img}
+      backgroundPosition={backgroundPosition}
       height={height}
       width={width}
       large={large}
+      margin={margin}
     >
       <PreText dangerouslySetInnerHTML={{ __html: content.preText }} />
       <Text large={large} dangerouslySetInnerHTML={{ __html: content.text }} />
@@ -21,11 +23,12 @@ const Container = styled.section`
   background-color: #a49194;
   background-image: url(${(props) => props.backgroundImage});
   background-size: cover;
-  background-position: bottom center;
+  background-position: ${(props) =>
+    props.backgroundPosition ? props.backgroundPosition : 'center'};
   height: ${(props) => props.height || '100vh'};
   width: 100%;
   max-width: ${(props) => props.width || '100%'};
-  margin: 0 auto ${(props) => (props.large ? '0' : '374px')} auto;
+  margin: ${(props) => (props.margin ? props.margin : '0 auto')};
   display: flex;
   flex-direction: column;
   justify-content: center;

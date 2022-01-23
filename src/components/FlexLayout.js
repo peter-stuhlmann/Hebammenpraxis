@@ -29,9 +29,14 @@ const Text = styled.p`
   text-align: left;
   letter-spacing: 2.2px;
   color: #37322c;
+  font-size: clamp(18px, 5vw, 22px);
+  line-height: clamp(25px, 5vw, 30px);
+  padding-right: 30px;
+  box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1000px) {
     margin-bottom: 150px;
+    padding-right: 0;
   }
 `;
 
@@ -56,7 +61,7 @@ const Container = styled.section`
       width: 100%;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1000px) {
       flex: 0 0 100%;
     }
   }
