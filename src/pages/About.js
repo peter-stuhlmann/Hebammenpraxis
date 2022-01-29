@@ -25,6 +25,7 @@ const Heading = styled.h2`
   font-family: Josefin Slab;
   font-size: 40px;
   line-height: 48px;
+  font-weight: normal;
   color: #000;
   width: 100%;
   max-width: 1670px;

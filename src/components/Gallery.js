@@ -32,6 +32,7 @@ const Heading = styled.h2`
   font-size: clamp(30px, 5vw, 70px);
   line-height: clamp(37px, 5vw, 85px);
   font-family: Josefin Slab;
+  font-weight: normal;
   color: #000;
 `;
 

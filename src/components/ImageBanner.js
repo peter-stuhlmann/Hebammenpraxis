@@ -21,19 +21,24 @@ export default function ImageBanner(props) {
       large={large}
       margin={margin}
     >
-      <PreText dangerouslySetInnerHTML={{ __html: content.preText }} />
-      <Text
-        large={large}
-        textWidth={textWidth}
-        dangerouslySetInnerHTML={{ __html: content.text }}
-      />
+      {content.preText && (
+        <PreText dangerouslySetInnerHTML={{ __html: content.preText }} />
+      )}
+      {content.text && (
+        <Text
+          large={large}
+          textWidth={textWidth}
+          dangerouslySetInnerHTML={{ __html: content.text }}
+        />
+      )}
     </Container>
   );
 }
 
 const Container = styled.section`
   background-color: #a49194;
-  background-image: url(${(props) => props.backgroundImage});
+  ${(props) =>
+    props.backgroundImage && `background-image: url(${props.backgroundImage});`}
   background-size: cover;
   background-position: ${(props) =>
     props.backgroundPosition ? props.backgroundPosition : 'center'};

@@ -49,7 +49,6 @@ const Container = styled.section`
 const Wrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  border-bottom: 2px solid #707070;
   padding: 110px 0;
 `;
 
@@ -57,6 +56,7 @@ const Heading = styled.h2`
   font-size: 40px;
   line-height: 48px;
   font-family: Josefin Slab;
+  font-weight: normal;
   color: #000;
   flex: 0 0 100%;
 `;

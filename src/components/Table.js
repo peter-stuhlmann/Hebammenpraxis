@@ -53,6 +53,7 @@ const Heading = styled.h2`
   font-family: Josefin Slab;
   font-size: clamp(30px, 5vw, 70px);
   line-height: clamp(37px, 5vw, 85px);
+  font-weight: normal;
   margin: 0;
   color: ${(props) => (props.alternate ? '#fff' : '#000')};
 

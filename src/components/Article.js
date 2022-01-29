@@ -17,11 +17,15 @@ export default function Article(props) {
             />
           </ImageContainer>
         )}
-        <Content>
+        <Content imgRight={content.img.right}>
           {content.author && <Author>{content.author}</Author>}
           {content.title && <Title>{content.title}</Title>}
-          {content.intro && <Intro>{content.intro}</Intro>}
-          {content.text && <Text>{content.text}</Text>}
+          {content.intro && (
+            <Intro dangerouslySetInnerHTML={{ __html: content.intro }} />
+          )}
+          {content.text && (
+            <Text dangerouslySetInnerHTML={{ __html: content.text }} />
+          )}
           {content.button && (
             <Button
               href={content.button.href}
@@ -64,7 +68,7 @@ const Wrapper = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  flex: 0 0 41%;
+  flex: 0 0 40%;
 
   @media (max-width: 768px) {
     flex: 0 0 100%;
@@ -76,9 +80,9 @@ const Image = styled.img`
 `;
 
 const Content = styled.div`
-  flex: 0 0 59%;
+  flex: 0 0 60%;
   box-sizing: border-box;
-  padding: 3vw 100px 0 115px;
+  padding: ${(props) => (props.imgRight ? '3vw 115px 0 0 ' : '3vw 0 0 115px')};
 
   @media (max-width: 1200px) {
     padding: 3vw 15px 0 30px;
@@ -103,6 +107,7 @@ const Title = styled.h2`
   font-size: clamp(30px, 5vw, 70px);
   line-height: clamp(37px, 5vw, 85px);
   font-family: Josefin Slab;
+  font-weight: normal;
   margin-bottom: 47px;
 `;
 
