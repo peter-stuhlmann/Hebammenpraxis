@@ -8,7 +8,9 @@ import Button from './Button';
 import headerContent from '../data/headerContent';
 import socialMedia from '../data/socialMedia';
 
-export default function Header() {
+export default function Header(props) {
+  const { setContactFormVisibility } = props;
+
   return (
     <Container>
       <Wrapper>
@@ -30,10 +32,15 @@ export default function Header() {
             <Title>{headerContent.title}</Title>
             <Name>{headerContent.name}</Name>
           </SiteTitle>
-          <MainMenu />
+          <MainMenu setContactFormVisibility={setContactFormVisibility} />
         </section>
         <ButtonContainer>
-          <Button href={headerContent.contact.href}>
+          <Button
+            href={headerContent.contact.href}
+            onClick={() => {
+              setContactFormVisibility(true);
+            }}
+          >
             {headerContent.contact.linkText}
           </Button>
         </ButtonContainer>

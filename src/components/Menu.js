@@ -9,7 +9,9 @@ import headerNav from '../data/headerNav';
 
 import useOnClickOutside from '../helpers/useOnClickOutside';
 
-export default function Menu() {
+export default function Menu(props) {
+  const { setContactFormVisibility } = props;
+
   const [open, setOpen] = useState(false);
 
   const nav = useRef();
@@ -34,7 +36,10 @@ export default function Menu() {
         <NavbarItem>
           <Button
             href={headerContent.contact.href}
-            onClick={() => setOpen(!open)}
+            onClick={() => {
+              setContactFormVisibility(true);
+              setOpen(!open);
+            }}
           >
             {headerContent.contact.linkText}
           </Button>

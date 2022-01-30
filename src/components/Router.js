@@ -9,7 +9,9 @@ const NotFound = lazy(() => import('../pages/NotFound'));
 const Practice = lazy(() => import('../pages/Practice'));
 const Services = lazy(() => import('../pages/Services'));
 
-export default function Router() {
+export default function Router(props) {
+  const { contactFormVisibility, setContactFormVisibility } = props;
+
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -18,7 +20,12 @@ export default function Router() {
 
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/">
+        <Home
+          contactFormVisibility={contactFormVisibility}
+          setContactFormVisibility={setContactFormVisibility}
+        />
+      </Route>
       <Route exact path="/ueber-uns" component={About} />
       <Route exact path="/praxis" component={Practice} />
       <Route exact path="/leistungen" component={Services} />

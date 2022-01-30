@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ContactForm from './ContactForm';
+
 export default function ImageBanner(props) {
   const {
     content,
@@ -10,6 +12,8 @@ export default function ImageBanner(props) {
     backgroundPosition,
     margin,
     textWidth,
+    contactFormVisibility,
+    setContactFormVisibility,
   } = props;
 
   return (
@@ -20,6 +24,7 @@ export default function ImageBanner(props) {
       width={width}
       large={large}
       margin={margin}
+      contactFormVisibility={contactFormVisibility}
     >
       {content.preText && (
         <PreText dangerouslySetInnerHTML={{ __html: content.preText }} />
@@ -30,6 +35,9 @@ export default function ImageBanner(props) {
           textWidth={textWidth}
           dangerouslySetInnerHTML={{ __html: content.text }}
         />
+      )}
+      {content.contactForm && (
+        <ContactForm setContactFormVisibility={setContactFormVisibility} />
       )}
     </Container>
   );
@@ -52,6 +60,12 @@ const Container = styled.section`
   align-items: center;
   padding: 15px;
   box-sizing: border-box;
+
+  ${(props) =>
+    props.contactFormVisibility &&
+    `@media (max-width: 1024px) {
+      height: auto;
+    }`}
 
   @media (max-width: 480px) {
     margin-bottom: 0;

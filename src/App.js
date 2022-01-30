@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import './assets/css/global.css';
@@ -9,11 +9,19 @@ import Footer from './components/Footer';
 import LoadingSpinner from './components/LoadingSpinner';
 
 export default function App() {
+  const [contactFormVisibility, setContactFormVisibility] = useState(false);
+
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingSpinner />}>
-        <Header />
-        <Router />
+        <Header
+          contactFormVisibility={contactFormVisibility}
+          setContactFormVisibility={setContactFormVisibility}
+        />
+        <Router
+          contactFormVisibility={contactFormVisibility}
+          setContactFormVisibility={setContactFormVisibility}
+        />
         <Footer />
       </Suspense>
     </BrowserRouter>
