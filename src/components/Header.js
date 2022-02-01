@@ -9,7 +9,7 @@ import headerContent from '../data/headerContent';
 import socialMedia from '../data/socialMedia';
 
 export default function Header(props) {
-  const { setContactFormVisibility } = props;
+  const { setContactFormVisibility, setSendingStatus } = props;
 
   return (
     <Container>
@@ -22,7 +22,7 @@ export default function Header(props) {
           ))}
         </SocialMediaMenu>
         <section>
-          <SiteTitle to="/">
+          <SiteTitle to="/" onClick={() => setContactFormVisibility(false)}>
             <Logo
               src={headerContent.logo}
               alt="Logo"
@@ -39,6 +39,7 @@ export default function Header(props) {
             href={headerContent.contact.href}
             onClick={() => {
               setContactFormVisibility(true);
+              setSendingStatus('');
             }}
           >
             {headerContent.contact.linkText}

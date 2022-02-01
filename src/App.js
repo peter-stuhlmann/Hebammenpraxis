@@ -10,6 +10,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 
 export default function App() {
   const [contactFormVisibility, setContactFormVisibility] = useState(false);
+  const [sendingStatus, setSendingStatus] = useState('');
 
   return (
     <BrowserRouter>
@@ -17,10 +18,13 @@ export default function App() {
         <Header
           contactFormVisibility={contactFormVisibility}
           setContactFormVisibility={setContactFormVisibility}
+          setSendingStatus={setSendingStatus}
         />
         <Router
           contactFormVisibility={contactFormVisibility}
           setContactFormVisibility={setContactFormVisibility}
+          sendingStatus={sendingStatus}
+          setSendingStatus={setSendingStatus}
         />
         <Footer />
       </Suspense>

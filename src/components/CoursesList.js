@@ -27,7 +27,7 @@ export default function CoursesList(props) {
         <Column>
           <List>
             {coursesList.map((course) => (
-              <ListItem>
+              <ListItem key={course.name + course.dateStart}>
                 <Name dangerouslySetInnerHTML={{ __html: course.name }} />
                 <Date>
                   {course.dateStart.slice(8, 10)}.{' '}
@@ -134,6 +134,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   border-bottom: 2px solid #707070;
   padding: 71px 0;
+  cursor: pointer;
 `;
 
 const Name = styled.div`

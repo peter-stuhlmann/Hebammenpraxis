@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from './Button';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function MapContainer(props) {
   const { content } = props;
 
+  const [loading, setLoading] = useState(true);
+
   return (
     <Container>
       <Heading>Der Weg zu uns</Heading>
-      <Map title="map" src={content.map} frameBorder="0" />
+      <Map>
+        {loading && <LoadingSpinner />}
+        <iframe
+          title="map"
+          src={content.map}
+          frameBorder="0"
+          onLoad={() => setLoading(true)}
+        />
+      </Map>
       <CustomizedButton href={content.button.href}>
         {content.button.linkText}
       </CustomizedButton>
@@ -37,14 +48,28 @@ const Heading = styled.h2`
   box-sizing: border-box;
 `;
 
-const Map = styled.iframe`
+const Map = styled.div`
   width: 100%;
   max-width: 1130px;
   height: 707px;
   max-height: 80vh;
-  overflow: hidden;
-  display: block;
   margin: 0 auto;
+  position: relative;
+
+  & > div {
+    height: 100%;
+    width: 100%;
+  }
+
+  iframe {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 `;
 
 const CustomizedButton = styled(Button)`

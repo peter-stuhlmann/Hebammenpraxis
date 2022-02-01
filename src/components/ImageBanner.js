@@ -14,6 +14,8 @@ export default function ImageBanner(props) {
     textWidth,
     contactFormVisibility,
     setContactFormVisibility,
+    sendingStatus,
+    setSendingStatus,
   } = props;
 
   return (
@@ -33,11 +35,17 @@ export default function ImageBanner(props) {
         <Text
           large={large}
           textWidth={textWidth}
+          contactFormVisibility={contactFormVisibility}
           dangerouslySetInnerHTML={{ __html: content.text }}
         />
       )}
       {content.contactForm && (
-        <ContactForm setContactFormVisibility={setContactFormVisibility} />
+        <ContactForm
+          contactFormVisibility={contactFormVisibility}
+          setContactFormVisibility={setContactFormVisibility}
+          sendingStatus={sendingStatus}
+          setSendingStatus={setSendingStatus}
+        />
       )}
     </Container>
   );
@@ -61,11 +69,7 @@ const Container = styled.section`
   padding: 15px;
   box-sizing: border-box;
 
-  ${(props) =>
-    props.contactFormVisibility &&
-    `@media (max-width: 1024px) {
-      height: auto;
-    }`}
+  ${(props) => props.contactFormVisibility && `height: auto;`}
 
   @media (max-width: 480px) {
     margin-bottom: 0;
@@ -81,6 +85,7 @@ const PreText = styled.p`
 `;
 
 const Text = styled.p`
+  display: ${(props) => (props.contactFormVisibility ? 'none' : 'block')};
   text-align: center;
   font-family: Josefin Slab;
   font-size: ${(props) =>

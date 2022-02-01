@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Button from './Button';
 
 export default function Services(props) {
-  const { content } = props;
+  const { content, onButtonClick } = props;
 
   return (
     <Container>
@@ -30,7 +30,10 @@ export default function Services(props) {
                 )}
               </Fragment>
             ))}
-            <CustomizedButton href={content.button.href}>
+            <CustomizedButton
+              href={content.button.href}
+              onClick={onButtonClick}
+            >
               {content.button.linkText}
             </CustomizedButton>
           </Content>

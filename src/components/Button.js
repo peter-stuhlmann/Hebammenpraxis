@@ -2,7 +2,8 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export default function Button(props) {
-  const { children, className, href, onClick, style, color } = props;
+  const { children, className, href, onClick, style, color, type, disabled } =
+    props;
 
   return href.startsWith('http') ? (
     <ExtLinkButton
@@ -11,6 +12,8 @@ export default function Button(props) {
       onClick={onClick}
       style={style}
       color={color}
+      type={type}
+      disabled={disabled}
     >
       {children}
     </ExtLinkButton>
@@ -21,6 +24,8 @@ export default function Button(props) {
       onClick={onClick}
       style={style}
       color={color}
+      type={type}
+      disabled={disabled}
     >
       {children}
     </IntLinkButton>
@@ -39,6 +44,16 @@ const baseStyles = css`
   text-transform: uppercase;
   padding: 28px 33px 26px 33px;
   display: inline-block;
+
+  ${(props) =>
+    props.disabled &&
+    `
+      background-color: #bfbfbf;
+      color: #a4a4a4;
+      pointer-events: none;
+      cursor: default;
+      user-select: none;
+  `};
 `;
 
 const IntLinkButton = styled(Link)`

@@ -10,7 +10,10 @@ export default function Footer() {
     <Container>
       <Menu>
         {footerNav.map((navItem) => (
-          <MenuItem key={navItem.linkText}>
+          <MenuItem
+            key={navItem.linkText}
+            onClick={() => window.scrollTo(0, 0)}
+          >
             <Link to={navItem.href}>{navItem.linkText}</Link>
           </MenuItem>
         ))}

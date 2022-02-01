@@ -1,65 +1,165 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
+import Button from './Button';
 import CloseButton from './CloseButton';
+import { Redirect } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function ContactForm(props) {
-  const { setContactFormVisibility } = props;
+  const {
+    contactFormVisibility,
+    setContactFormVisibility,
+    sendingStatus,
+    setSendingStatus,
+  } = props;
+
+  const [buttonContent, setButtonContent] = useState('Absenden');
+
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    email: '',
+    delivery: '',
+    gravida: '',
+    para: '',
+    message: '',
+  });
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = () => {
+    setButtonContent('Wird gesendet...');
+
+    axios
+      .post(
+        `${process.env.REACT_APP_SEND_MESSAGE_SERVER}/send-message`,
+        formData
+      )
+      .then((res) => {
+        setSendingStatus(res.data.status);
+      })
+      .catch(setSendingStatus('fail'));
+  };
 
   return (
-    <Container>
-      <CloseButton onClick={() => setContactFormVisibility(false)} />
-      <Flex>
-        <Heading>Betreuungsanfrage*</Heading>
-        <Note>
-          *Bitte beachten Sie, dass wir schneller auf ihre Anfrage reagieren
-          können, wenn sie vollständig ausgefüllt ist.
-        </Note>
-      </Flex>
-      <Info>Aktuell erst wieder Plätze ab ET im November 2022!</Info>
-      <Flex>
-        <Column>
-          <FormItem>
-            <Label for="name">NAME</Label>
-            <Input type="text" name="name" placeholder="..." />
-          </FormItem>
-          <FormItem>
-            <Label for="address">ADRESSE</Label>
-            <Input type="text" name="address" placeholder="..." />
-          </FormItem>
-          <FormItem>
-            <Label for="email">E-Mail Adresse</Label>
-            <Input type="email" name="email" placeholder="..." />
-          </FormItem>
-          <FormItem>
-            <Label for="message">Möglichkeit für eigenen Text</Label>
-            <TextArea name="message" placeholder="..." />
-          </FormItem>
-        </Column>
-        <Column>
-          <FormItem>
-            <Label for="et">ET</Label>
-            <Input type="text" name="et" placeholder="..." />
-          </FormItem>
-          <FormItem>
-            <Label for="gravida">GRAVIDA</Label>
-            <Input type="text" name="gravida" placeholder="..." />
-          </FormItem>
-          <FormItem>
-            <Label for="para">PARA</Label>
-            <Input type="text" name="para" placeholder="..." />
-          </FormItem>
-          <FormItem>
-            <Label for="phone">TELEFONNUMMER</Label>
-            <Input type="text" name="phone" placeholder="..." />
-          </FormItem>
-        </Column>
-      </Flex>
+    <Container contactFormVisibility={contactFormVisibility}>
+      {sendingStatus === 'success' && <Redirect to="/nachricht-gesendet" />}
+      {sendingStatus === 'fail' && <Redirect to="/senden-fehlgeschlagen" />}
+      {sendingStatus === '' && (
+        <>
+          <CloseButton onClick={() => setContactFormVisibility(false)} />
+          <Flex>
+            <Heading>Betreuungsanfrage*</Heading>
+            <Note>
+              *Bitte beachten Sie, dass wir schneller auf ihre Anfrage reagieren
+              können, wenn sie vollständig ausgefüllt ist.
+            </Note>
+          </Flex>
+          <Info>Aktuell erst wieder Plätze ab ET im November 2022!</Info>
+          <form onSubmit={handleSubmit}>
+            <Flex>
+              <Column>
+                <FormItem>
+                  <Label htmlFor="name">NAME</Label>
+                  <Input
+                    type="text"
+                    name="name"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <Label htmlFor="address">ADRESSE</Label>
+                  <Input
+                    type="text"
+                    name="address"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <Label htmlFor="email">E-Mail Adresse</Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <Label htmlFor="message">Möglichkeit für eigenen Text</Label>
+                  <TextArea
+                    name="message"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+              </Column>
+              <Column>
+                <FormItem>
+                  <Label htmlFor="delivery">ET</Label>
+                  <Input
+                    type="text"
+                    name="delivery"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <Label htmlFor="gravida">GRAVIDA</Label>
+                  <Input
+                    type="text"
+                    name="gravida"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <Label htmlFor="para">PARA</Label>
+                  <Input
+                    type="text"
+                    name="para"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+                <FormItem>
+                  <Label htmlFor="phone">TELEFONNUMMER</Label>
+                  <Input
+                    type="text"
+                    name="phone"
+                    placeholder="..."
+                    onChange={handleChange}
+                  />
+                </FormItem>
+              </Column>
+              <Column>
+                <Button
+                  href=""
+                  onClick={handleSubmit}
+                  style={{ marginTop: '40px' }}
+                  disabled={buttonContent === 'Wird gesendet...'}
+                >
+                  {buttonContent}
+                </Button>
+              </Column>
+            </Flex>
+          </form>
+        </>
+      )}
     </Container>
   );
 }
 
 const Container = styled.section`
+  display: ${(props) => (props.contactFormVisibility ? 'block' : 'none')};
   width: 100%;
   max-width: 1360px;
   margin: 57px auto;
@@ -75,6 +175,7 @@ const Container = styled.section`
 
 const Flex = styled.div`
   display: flex;
+  flex-flow row wrap;
 
   @media (max-width: 1024px) {
     flex-direction: column;

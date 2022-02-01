@@ -10,30 +10,29 @@ import Services from '../components/Services';
 import home from '../data/home';
 
 export default function Home(props) {
-  const { contactFormVisibility, setContactFormVisibility } = props;
+  const {
+    contactFormVisibility,
+    setContactFormVisibility,
+    sendingStatus,
+    setSendingStatus,
+  } = props;
 
   return (
     <>
-      {contactFormVisibility ? (
-        <ImageBanner
-          large
-          content={home.imgBanner[0]}
-          backgroundPosition="bottom center"
-          contactFormVisibility={contactFormVisibility}
-          setContactFormVisibility={setContactFormVisibility}
-        />
-      ) : (
-        <ImageBanner
-          large
-          textWidth="600px"
-          content={home.imgBanner[1]}
-          backgroundPosition="bottom center"
-        />
-      )}
+      <ImageBanner
+        large
+        textWidth="600px"
+        content={home.imgBanner[0]}
+        backgroundPosition="bottom center"
+        contactFormVisibility={contactFormVisibility}
+        setContactFormVisibility={setContactFormVisibility}
+        sendingStatus={sendingStatus}
+        setSendingStatus={setSendingStatus}
+      />
       <CenteredTextBox content={home.centeredTextBox} />
       <FlexLayout content={home.flexLayout} />
       <ImageBanner
-        content={home.imgBanner[2]}
+        content={home.imgBanner[1]}
         height="657px"
         width="1640px"
         backgroundPosition="bottom center"
