@@ -22,7 +22,13 @@ export default function Header(props) {
           ))}
         </SocialMediaMenu>
         <section>
-          <SiteTitle to="/" onClick={() => setContactFormVisibility(false)}>
+          <SiteTitle
+            to="/"
+            onClick={() => {
+              setContactFormVisibility(false);
+              setSendingStatus('');
+            }}
+          >
             <Logo
               src={headerContent.logo}
               alt="Logo"

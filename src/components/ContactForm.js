@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 import Button from './Button';
 import CloseButton from './CloseButton';
-import { Redirect } from 'react-router-dom';
-import LoadingSpinner from './LoadingSpinner';
 
 export default function ContactForm(props) {
   const {
@@ -45,7 +44,9 @@ export default function ContactForm(props) {
       .then((res) => {
         setSendingStatus(res.data.status);
       })
-      .catch(setSendingStatus('fail'));
+      .catch(() => {
+        setSendingStatus('fail');
+      });
   };
 
   return (
