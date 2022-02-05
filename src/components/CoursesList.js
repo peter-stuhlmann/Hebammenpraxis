@@ -6,7 +6,7 @@ import Button from './Button';
 import monthNameGenerator from '../helpers/monthNameGenerator';
 
 export default function CoursesList(props) {
-  const { coursesList } = props;
+  const { coursesList, setContactFormVisibility } = props;
 
   return (
     <Container>
@@ -45,7 +45,9 @@ export default function CoursesList(props) {
           </List>
           <ButtonContainer>
             <Button href="/kurs-buchen">Kurs buchen</Button>
-            <Button href="/kontakt">Kontaktformular</Button>
+            <Button href="/" onClick={() => setContactFormVisibility(true)}>
+              Kontaktformular
+            </Button>
           </ButtonContainer>
         </Column>
       </Wrapper>

@@ -26,6 +26,8 @@ export default function ContactForm(props) {
     message: '',
   });
 
+  const [formDataError, setFormDataError] = useState(false);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -33,20 +35,42 @@ export default function ContactForm(props) {
     });
   };
 
-  const handleSubmit = () => {
-    setButtonContent('Wird gesendet...');
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    axios
-      .post(
-        `${process.env.REACT_APP_SEND_MESSAGE_SERVER}/send-message`,
-        formData
-      )
-      .then((res) => {
-        setSendingStatus(res.data.status);
-      })
-      .catch(() => {
-        setSendingStatus('fail');
-      });
+    setFormDataError({
+      name: !formData['name'] ? 'Bitte gib Deinen Namen an (Pflichtfeld)' : '',
+      address: !formData['address']
+        ? 'Bitte gib Deine Adresse an (Pflichtfeld)'
+        : '',
+      email: !formData['email']
+        ? 'Bitte gib Deine E-Mail-Adresse an (Pflichtfeld)'
+        : '',
+      delivery: !formData['delivery']
+        ? 'Bitte gib Deinen ET an (Pflichtfeld)'
+        : '',
+    });
+
+    if (
+      formData['name'] &&
+      formData['address'] &&
+      formData['email'] &&
+      formData['delivery']
+    ) {
+      setButtonContent('Wird gesendet...');
+
+      axios
+        .post(
+          `${process.env.REACT_APP_SEND_MESSAGE_SERVER}/send-message`,
+          formData
+        )
+        .then((res) => {
+          setSendingStatus(res.data.status);
+        })
+        .catch(() => {
+          setSendingStatus('fail');
+        });
+    }
   };
 
   return (
@@ -74,7 +98,9 @@ export default function ContactForm(props) {
                     name="name"
                     placeholder="..."
                     onChange={handleChange}
+                    warning={formDataError.name}
                   />
+                  {formDataError.name && <Error>{formDataError.name}</Error>}
                 </FormItem>
                 <FormItem>
                   <Label htmlFor="address">ADRESSE</Label>
@@ -83,7 +109,11 @@ export default function ContactForm(props) {
                     name="address"
                     placeholder="..."
                     onChange={handleChange}
+                    warning={formDataError.address}
                   />
+                  {formDataError.address && (
+                    <Error>{formDataError.address}</Error>
+                  )}
                 </FormItem>
                 <FormItem>
                   <Label htmlFor="email">E-Mail Adresse</Label>
@@ -92,7 +122,9 @@ export default function ContactForm(props) {
                     name="email"
                     placeholder="..."
                     onChange={handleChange}
+                    warning={formDataError.email}
                   />
+                  {formDataError.email && <Error>{formDataError.email}</Error>}
                 </FormItem>
                 <FormItem>
                   <Label htmlFor="message">Möglichkeit für eigenen Text</Label>
@@ -111,7 +143,11 @@ export default function ContactForm(props) {
                     name="delivery"
                     placeholder="..."
                     onChange={handleChange}
+                    warning={formDataError.delivery}
                   />
+                  {formDataError.delivery && (
+                    <Error>{formDataError.delivery}</Error>
+                  )}
                 </FormItem>
                 <FormItem>
                   <Label htmlFor="gravida">GRAVIDA</Label>
@@ -143,7 +179,6 @@ export default function ContactForm(props) {
               </Column>
               <Column>
                 <Button
-                  href=""
                   onClick={handleSubmit}
                   style={{ marginTop: '40px' }}
                   disabled={buttonContent === 'Wird gesendet...'}
@@ -228,6 +263,7 @@ const Column = styled.div`
 
 const FormItem = styled.div`
   margin-bottom: 19px;
+  position: relative;
 `;
 
 const Label = styled.label`
@@ -251,6 +287,9 @@ const Input = styled.input`
   box-sizing: border-box;
   border: none;
   outline: none;
+  background-color: ${(props) => (props.warning ? '#ffe0e5' : '#fff')};
+  box-shadow: ${(props) =>
+    props.warning ? 'inset 0px 0px 0px 4px #f00' : 'none'};
 
   ::placeholder {
     font-size: 17px;
@@ -282,4 +321,12 @@ const TextArea = styled.textarea`
     letter-spacing: 1.7px;
     color: #a49194;
   }
+`;
+
+const Error = styled.span`
+  color: #fff;
+  position: absolute;
+  top: 18px;
+  left: 0px;
+  font-size: 13px;
 `;

@@ -10,7 +10,7 @@ import practice from '../data/practice';
 export default function Practice() {
   return (
     <>
-      <ImageBanner large content={practice.imgBanner[0]} textWidth="1300px" />
+      <ImageBanner large content={practice.imgBanner[0]} textWidth="1550px" />
       <CenteredTextBox content={practice.centeredTextBox} />
       <FlexLayout content={practice.flexLayout} />
       <ImageBanner

@@ -42,7 +42,9 @@ export default function Router(props) {
       <Route exact path="/leistungen">
         <Services setContactFormVisibility={setContactFormVisibility} />
       </Route>
-      <Route exact path="/kurse" component={Courses} />
+      <Route exact path="/kurse">
+        <Courses setContactFormVisibility={setContactFormVisibility} />
+      </Route>
       <Route exact path="/kontakt" component={Contact} />
       <Route exact path="/impressum" component={LegalNotice} />
       <Route exact path="/datenschutzerklaerung" component={PrivacyPolicy} />

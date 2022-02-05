@@ -7,12 +7,19 @@ import CoursesList from '../components/CoursesList';
 import courses from '../data/courses';
 import coursesList from '../data/coursesList';
 
-export default function Courses() {
+export default function Courses(props) {
+  const { setContactFormVisibility } = props;
+
   return (
     <>
-      <ImageBanner content={courses.banner} height="659px" textWidth="1500px" />
-      <CoursesList coursesList={coursesList} />
-      <Article content={courses.article[0]} buttonColor={['#E3E0D4', '#fff']} />
+      <ImageBanner content={courses.banner} height="659px" textWidth="1475px" />
+      <CoursesList
+        coursesList={coursesList}
+        setContactFormVisibility={setContactFormVisibility}
+      />
+      {courses.article.map((course, i) => (
+        <Article key={i} content={course} buttonColor={['#E3E0D4', '#fff']} />
+      ))}
     </>
   );
 }

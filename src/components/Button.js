@@ -5,31 +5,46 @@ export default function Button(props) {
   const { children, className, href, onClick, style, color, type, disabled } =
     props;
 
-  return href.startsWith('http') ? (
-    <ExtLinkButton
-      href={href}
-      className={className}
-      onClick={onClick}
-      style={style}
-      color={color}
-      type={type}
-      disabled={disabled}
-    >
-      {children}
-    </ExtLinkButton>
-  ) : (
-    <IntLinkButton
-      to={href}
-      className={className}
-      onClick={onClick}
-      style={style}
-      color={color}
-      type={type}
-      disabled={disabled}
-    >
-      {children}
-    </IntLinkButton>
-  );
+  if (href && href.startsWith('http')) {
+    return (
+      <ExtLinkButton
+        href={href}
+        className={className}
+        onClick={onClick}
+        style={style}
+        color={color}
+        disabled={disabled}
+      >
+        {children}
+      </ExtLinkButton>
+    );
+  } else if (href && !href.startsWith('http')) {
+    return (
+      <IntLinkButton
+        to={href}
+        className={className}
+        onClick={onClick}
+        style={style}
+        color={color}
+        disabled={disabled}
+      >
+        {children}
+      </IntLinkButton>
+    );
+  } else {
+    return (
+      <NoHrefButton
+        className={className}
+        onClick={onClick}
+        style={style}
+        color={color}
+        type={type}
+        disabled={disabled}
+      >
+        {children}
+      </NoHrefButton>
+    );
+  }
 }
 
 const baseStyles = css`
@@ -44,6 +59,8 @@ const baseStyles = css`
   text-transform: uppercase;
   padding: 28px 33px 26px 33px;
   display: inline-block;
+  border: none;
+  cursor: pointer;
 
   ${(props) =>
     props.disabled &&
@@ -61,5 +78,9 @@ const IntLinkButton = styled(Link)`
 `;
 
 const ExtLinkButton = styled.a`
+  ${baseStyles}
+`;
+
+const NoHrefButton = styled.button`
   ${baseStyles}
 `;

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Article from '../components/Article';
+// import Article from '../components/Article';
 import Services from '../components/Services';
+import FlexLayout from '../components/FlexLayout';
 
 import services from '../data/services';
 
@@ -14,10 +15,12 @@ export default function ServicePage(props) {
         content={services.services}
         onButtonClick={() => setContactFormVisibility(true)}
       />
-      <Article
-        content={services.article[1]}
-        buttonColor={['#E3E0D4', '#fff']}
-      />
+
+      {/* ÜBERSCHRIFT fehlt noch (Modul von pages/About.js kopieren) */}
+      <FlexLayout content={services.before} />
+
+      {/* ÜBERSCHRIFT fehlt noch*/}
+      <FlexLayout content={services.after} />
     </>
   );
 }
