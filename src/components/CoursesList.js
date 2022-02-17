@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from './Button';
+import LoadingSpinner from './LoadingSpinner';
 
 import monthNameGenerator from '../helpers/monthNameGenerator';
 
 export default function CoursesList(props) {
-  const { coursesList, setContactFormVisibility } = props;
+  const { setContactFormVisibility } = props;
+
+  const [courses, setCourses] = useState(null);
+
+  const [formData, setFormData] = useState({
+    user: '1',
+    idArt: '0001',
+    idVorlage: '1',
+  });
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  };
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER}/get-courses`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        setCourses(data.kursarten[0].vorlagen[0].kurse);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <Container>
@@ -25,24 +49,25 @@ export default function CoursesList(props) {
           />
         </Column>
         <Column>
-          <List>
-            {coursesList.map((course) => (
-              <ListItem key={course.name + course.dateStart}>
-                <Name dangerouslySetInnerHTML={{ __html: course.name }} />
-                <Date>
-                  {course.dateStart.slice(8, 10)}.{' '}
-                  {monthNameGenerator(course.dateStart.slice(5, 7))}{' '}
-                  {/* {course.dateStart.slice(0, 4)} */}
-                  {' - '}
-                  {course.dateStart.slice(11, 13)}:
-                  {course.dateStart.slice(13, 15)}
-                  {' - '}
-                  {course.dateEnd.slice(11, 13)}:{course.dateEnd.slice(13, 15)}{' '}
-                  Uhr
-                </Date>
-              </ListItem>
-            ))}
-          </List>
+          {courses ? (
+            <List>
+              {courses.map((course) => (
+                <ListItem key={course.id}>
+                  <Name>{course.bezeichnung}</Name>
+                  <Date>
+                    {course.ersterTermin.slice(0, 2)}.{' '}
+                    {monthNameGenerator(course.ersterTermin.slice(3, 5))}{' '}
+                    {' - '}
+                    {course.vonUhrzeit.slice(0, 5)}
+                    {' - '}
+                    {course.bisUhrzeit.slice(0, 5)} Uhr
+                  </Date>
+                </ListItem>
+              ))}
+            </List>
+          ) : (
+            <LoadingSpinner />
+          )}
           <ButtonContainer>
             <Button href="/kurs-buchen">Kurs buchen</Button>
             <Button href="/" onClick={() => setContactFormVisibility(true)}>

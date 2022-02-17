@@ -60,10 +60,7 @@ export default function ContactForm(props) {
       setButtonContent('Wird gesendet...');
 
       axios
-        .post(
-          `${process.env.REACT_APP_SEND_MESSAGE_SERVER}/send-message`,
-          formData
-        )
+        .post(`${process.env.REACT_APP_SERVER}/send-message`, formData)
         .then((res) => {
           setSendingStatus(res.data.status);
         })
