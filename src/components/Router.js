@@ -4,6 +4,7 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 const Home = lazy(() => import('../pages/Home'));
 const About = lazy(() => import('../pages/About'));
 const Contact = lazy(() => import('../pages/Contact'));
+const CourseBooking = lazy(() => import('../pages/CourseBooking'));
 const Courses = lazy(() => import('../pages/Courses'));
 const LegalNotice = lazy(() => import('../pages/LegalNotice'));
 const MessageSent = lazy(() => import('../pages/MessageSent'));
@@ -44,6 +45,9 @@ export default function Router(props) {
       </Route>
       <Route exact path="/kurse">
         <Courses setContactFormVisibility={setContactFormVisibility} />
+      </Route>
+      <Route exact path="/kurs-buchen">
+        <CourseBooking />
       </Route>
       <Route exact path="/kontakt" component={Contact} />
       <Route exact path="/impressum" component={LegalNotice} />

@@ -10,6 +10,7 @@ export default function CoursesList(props) {
   const { setContactFormVisibility } = props;
 
   const [courses, setCourses] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState({ id: '-1' });
 
   const [formData, setFormData] = useState({
     user: '1',
@@ -52,7 +53,10 @@ export default function CoursesList(props) {
           {courses ? (
             <List>
               {courses.map((course) => (
-                <ListItem key={course.id}>
+                <ListItem
+                  key={course.id}
+                  onClick={() => setSelectedCourse(course)}
+                >
                   <Name>{course.bezeichnung}</Name>
                   <Date>
                     {course.ersterTermin.slice(0, 2)}.{' '}
@@ -69,7 +73,11 @@ export default function CoursesList(props) {
             <LoadingSpinner />
           )}
           <ButtonContainer>
-            <Button href="/kurs-buchen">Kurs buchen</Button>
+            <Button
+              href={`/kurs-buchen?id=${selectedCourse.id}&title=${selectedCourse.bezeichnung}`}
+            >
+              Kurs buchen
+            </Button>
             <Button href="/" onClick={() => setContactFormVisibility(true)}>
               Kontaktformular
             </Button>
