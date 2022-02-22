@@ -30,8 +30,8 @@ const Heading = styled.h2`
 
 const Image = styled.img`
   width: 100%;
-  height: calc((1608px / 3) * 1.3);
   object-fit: cover;
+  aspect-ratio: 1 / 1.3;
 `;
 
 const Text = styled.p`
