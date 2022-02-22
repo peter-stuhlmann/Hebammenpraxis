@@ -54,6 +54,7 @@ const Navbar = styled.ul`
   display: flex;
   justify-content: center;
   margin: 17px 0 7px 0;
+  padding: 0;
   list-style-type: none;
 
   @media (max-width: 1349px) {

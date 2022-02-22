@@ -9,6 +9,7 @@ export default function ImageBanner(props) {
     height,
     large,
     width,
+    backgroundColor,
     backgroundPosition,
     margin,
     textWidth,
@@ -21,6 +22,7 @@ export default function ImageBanner(props) {
   return (
     <Container
       backgroundImage={content.img}
+      backgroundColor={backgroundColor}
       backgroundPosition={backgroundPosition}
       height={height}
       width={width}
@@ -52,7 +54,7 @@ export default function ImageBanner(props) {
 }
 
 const Container = styled.section`
-  background-color: #a49194;
+  background-color: ${(props) => props.backgroundColor || '#a49194'};
   ${(props) =>
     props.backgroundImage && `background-image: url(${props.backgroundImage});`}
   background-size: cover;

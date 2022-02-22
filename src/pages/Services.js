@@ -1,6 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
 
-// import Article from '../components/Article';
 import Services from '../components/Services';
 import FlexLayout from '../components/FlexLayout';
 
@@ -16,11 +16,21 @@ export default function ServicePage(props) {
         onButtonClick={() => setContactFormVisibility(true)}
       />
 
-      {/* ÜBERSCHRIFT fehlt noch (Modul von pages/About.js kopieren) */}
-      <FlexLayout content={services.before} />
-
-      {/* ÜBERSCHRIFT fehlt noch*/}
-      <FlexLayout content={services.after} />
+      <Heading>Vor der Geburt / Nach der Geburt</Heading>
+      <FlexLayout content={services.procedure} smallHeading />
     </>
   );
 }
+
+const Heading = styled.h2`
+  font-family: Josefin Slab;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: normal;
+  color: #000;
+  width: 100%;
+  max-width: 1670px;
+  margin: 157px auto 80px auto;
+  padding: 15px;
+  box-sizing: border-box;
+`;

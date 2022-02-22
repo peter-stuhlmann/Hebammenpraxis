@@ -15,8 +15,13 @@ export default function About() {
       <FlexLayout content={about.team} />
       <ImageBanner content={about.imgBanner} height="657px" />
       <CenteredTextBox content={about.quote} />
-      <Article content={about.article[0]} alternate />
+      <Article content={about.article[0]} backgroundColor="#E3E0D4" />
       <Article content={about.article[1]} />
+      <Article
+        content={about.article[2]}
+        backgroundColor="#B6A9AB"
+        textColor="#fff"
+      />
     </>
   );
 }

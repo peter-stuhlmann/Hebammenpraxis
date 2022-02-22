@@ -239,8 +239,8 @@ const Note = styled.div`
 `;
 
 const Info = styled.div`
-  font-size: 40px;
-  line-height: 48px;
+  font-size: clamp(26px, 5vw, 40px);
+  line-height: clamp(32px, 5vw, 48px);
   font-family: Josefin Slab;
   color: #fff;
   margin-bottom: 55px;

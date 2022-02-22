@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Button from './Button';
 
 export default function Article(props) {
-  const { content, alternate, buttonColor } = props;
+  const { content, backgroundColor, buttonColor, textColor } = props;
 
   return (
-    <Container alternate={alternate}>
+    <Container backgroundColor={backgroundColor}>
       <Wrapper reverse={content.img.right}>
         {content.img.left && (
           <ImageContainer>
@@ -18,13 +19,23 @@ export default function Article(props) {
           </ImageContainer>
         )}
         <Content imgRight={content.img.right}>
-          {content.author && <Author>{content.author}</Author>}
-          {content.title && <Title>{content.title}</Title>}
+          {content.author && (
+            <Author textColor={textColor}>{content.author}</Author>
+          )}
+          {content.title && (
+            <Title textColor={textColor}>{content.title}</Title>
+          )}
           {content.intro && (
-            <Intro dangerouslySetInnerHTML={{ __html: content.intro }} />
+            <Intro
+              dangerouslySetInnerHTML={{ __html: content.intro }}
+              textColor={textColor}
+            />
           )}
           {content.text && (
-            <Text dangerouslySetInnerHTML={{ __html: content.text }} />
+            <Text
+              dangerouslySetInnerHTML={{ __html: content.text }}
+              textColor={textColor}
+            />
           )}
           {content.button && (
             <Button
@@ -51,7 +62,7 @@ export default function Article(props) {
 }
 
 const Container = styled.article`
-  background-color: ${(props) => (props.alternate ? '#e3e0d4' : '#fff')};
+  background-color: ${(props) => props.backgroundColor || '#fff'};
 `;
 
 const Wrapper = styled.div`
@@ -95,7 +106,7 @@ const Content = styled.div`
 `;
 
 const Author = styled.div`
-  color: #c0a1a7;
+  color: ${(props) => props.textColor || '#c0a1a7'};
   font-size: 20px;
   line-height: 23px;
   font-family: Gilroy;
@@ -103,7 +114,7 @@ const Author = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #000;
+  color: ${(props) => props.textColor || '#000'};
   font-size: clamp(30px, 5vw, 70px);
   line-height: clamp(37px, 5vw, 85px);
   font-family: Josefin Slab;
@@ -112,14 +123,14 @@ const Title = styled.h2`
 `;
 
 const Intro = styled.p`
-  color: #000;
+  color: ${(props) => props.textColor || '#000'};
   font-size: clamp(22px, 5vw, 28px);
   line-height: clamp(27px, 5vw, 34px);
   font-family: Josefin Slab;
 `;
 
 const Text = styled.p`
-  color: #37322c;
+  color: ${(props) => props.textColor || '#37322c'};
   font-size: clamp(18px, 5vw, 22px);
   line-height: clamp(25px, 5vw, 30px);
   font-family: Gilroy;
