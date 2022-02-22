@@ -40,42 +40,39 @@ const Images = styled.div`
   display: flex;
   flex-flow: row wrap;
   margin-bottom: 280px;
+  margin: 0 -8px;
 `;
 
 const Image = styled.div`
-  margin-bottom: 12px;
-  margin-right: 16px;
-  flex: 0 0 calc((100% - 2 * 16px) / 3);
-
-  &:nth-child(3n) {
-    margin-right: 0;
-  }
-
-  img {
-    width: 100%;
-  }
+  margin: 0 8px 16px 8px;
+  flex: 0 0 calc((100% - 3 * 16px) / 3);
 
   @media (max-width: 768px) {
-    flex: 0 0 calc((100% - 16px) / 2);
-
-    &:nth-child(3n) {
-      margin-right: 16px;
-    }
-
-    &:nth-child(2n) {
-      margin-right: 0;
-    }
+    flex: 0 0 calc((100% - 2 * 16px) / 2);
   }
 
   @media (max-width: 480px) {
-    flex: 0 0 100%;
+    flex: 0 0 calc(100% - 16px);
+  }
 
-    &:nth-child(3n) {
-      margin-right: 0;
+  // Special rules for wider images
+  &:nth-child(5),
+  &:nth-child(9) {
+    flex: 0 0 calc((100% - 1.5 * 16px) / 3 * 2);
+
+    @media (max-width: 768px) {
+      flex: 0 0 calc(100% - 16px);
     }
 
-    &:nth-child(2n) {
-      margin-right: 0;
+    img {
+      aspect-ratio: 2 / 1.3;
     }
-  } ;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1 / 1.3;
+    object-fit: cover;
+  }
 `;
