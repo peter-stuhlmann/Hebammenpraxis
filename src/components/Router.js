@@ -7,8 +7,7 @@ const Contact = lazy(() => import('../pages/Contact'));
 const CourseBooking = lazy(() => import('../pages/CourseBooking'));
 const Courses = lazy(() => import('../pages/Courses'));
 const LegalNotice = lazy(() => import('../pages/LegalNotice'));
-const MessageSent = lazy(() => import('../pages/MessageSent'));
-const MessageNotSent = lazy(() => import('../pages/MessageNotSent'));
+const SendingStatus = lazy(() => import('../pages/SendingStatus'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 const Practice = lazy(() => import('../pages/Practice'));
 const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
@@ -47,21 +46,48 @@ export default function Router(props) {
         <Courses setContactFormVisibility={setContactFormVisibility} />
       </Route>
       <Route exact path="/kurs-buchen">
-        <CourseBooking />
+        <CourseBooking
+          sendingStatus={sendingStatus}
+          setSendingStatus={setSendingStatus}
+        />
       </Route>
       <Route exact path="/kontakt" component={Contact} />
       <Route exact path="/impressum" component={LegalNotice} />
       <Route exact path="/datenschutzerklaerung" component={PrivacyPolicy} />
       <Route exact path="/nachricht-gesendet">
-        <MessageSent
+        <SendingStatus
           setSendingStatus={setSendingStatus}
           setContactFormVisibility={setContactFormVisibility}
+          heading="Nachricht gesendet"
+          text="Die Nachricht wurde gesendet. Du wirst in Kürze kontaktiert."
+          button={['/', 'Zurück zur Startseite', false]}
         />
       </Route>
       <Route exact path="/senden-fehlgeschlagen">
-        <MessageNotSent
+        <SendingStatus
           setSendingStatus={setSendingStatus}
           setContactFormVisibility={setContactFormVisibility}
+          heading="Nachricht konnte nicht gesendet werden"
+          text="Leider ist ein Fehler aufgetreten. Bitte warte einen Moment und stelle Deine Anfrage erneut."
+          button={['/', 'Zurück zur Betreuungsanfrage', true]}
+        />
+      </Route>
+      <Route exact path="/kursbuchung-erfolgreich">
+        <SendingStatus
+          setSendingStatus={setSendingStatus}
+          setContactFormVisibility={setContactFormVisibility}
+          heading="Der Kurs wurde gebucht"
+          text=""
+          button={['/', 'Zurück zur Startseite', false]}
+        />
+      </Route>
+      <Route exact path="/kursbuchung-fehlgeschlagen">
+        <SendingStatus
+          setSendingStatus={setSendingStatus}
+          setContactFormVisibility={setContactFormVisibility}
+          heading="Kursbuchung fehlgeschlagen"
+          text="Es ist ein Fehler aufgetreten. Bitte versuche es in Kürze erneut."
+          button={['/kurse', 'Zurück zur Kursübersicht', false]}
         />
       </Route>
       <Route component={NotFound} />

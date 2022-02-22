@@ -2,26 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../components/Button';
 
-export default function MessageSent(props) {
-  const { setSendingStatus, setContactFormVisibility } = props;
+export default function SendingStatus(props) {
+  const { setSendingStatus, setContactFormVisibility, heading, text, button } =
+    props;
 
   return (
     <Container>
-      <Heading>Nachricht konnte nicht gesendet werden</Heading>
-      <Text>
-        Leider ist ein Fehler aufgetreten. Bitte warte einen Moment und stelle
-        Deine Anfrage erneut.
-      </Text>
+      <Heading>{heading}</Heading>
+      <Text>{text}</Text>
       <Button
-        href="/"
+        href={button[0]}
         color={['#E3E0D4', '#fff']}
         style={{ marginTop: '40px' }}
         onClick={() => {
           setSendingStatus('');
-          setContactFormVisibility(true);
+          setContactFormVisibility(button[2]);
         }}
       >
-        Zurück zur Betreuungsanfrage
+        {button[1]}
       </Button>
     </Container>
   );
