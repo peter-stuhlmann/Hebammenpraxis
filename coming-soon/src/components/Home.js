@@ -26,7 +26,6 @@ const Container = styled.main`
   background-image: url('img/background.png');
   background-position: center;
   background-size: cover;
-  background-attachment: fixed;
   min-height: 100vh;
   width: 100%;
   display: flex;
