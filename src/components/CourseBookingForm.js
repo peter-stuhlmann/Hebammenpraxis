@@ -45,7 +45,7 @@ export default function CourseBookingForm(props) {
 
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const [formDataError, setFormDataError] = useState(false);
+  const [formDataError, setFormDataError] = useState({});
 
   const handleChange = (event) => {
     setFormData({
@@ -64,7 +64,9 @@ export default function CourseBookingForm(props) {
   const handleDateChange = (event) => {
     setFormData({
       ...formData,
-      [event.target.name]: new Date(event.target.value).toISOString(),
+      [event.target.name]: new Date(event.target.value)
+        .toISOString()
+        .slice(0, 10),
     });
   };
 
@@ -77,6 +79,12 @@ export default function CourseBookingForm(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    // validation
+    const date = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/;
+    const zip = /^[0-9]{5}$/;
+    const email = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    const kassenik = /^[0-9]{9}$/;
+
     setFormDataError({
       vorname: !formData['vorname']
         ? 'Bitte gib Deinen Vornamen an (Pflichtfeld)'
@@ -86,23 +94,35 @@ export default function CourseBookingForm(props) {
         : '',
       geburtsdatum: !formData['geburtsdatum']
         ? 'Bitte gib Dein Geburtsdatum an (Pflichtfeld)'
+        : !formData['geburtsdatum'].match(date)
+        ? 'Ungültige Eingabe'
         : '',
       entbindungstermin: !formData['entbindungstermin']
         ? 'Bitte gib Deinen Entbindungstermin an (Pflichtfeld)'
+        : !formData['entbindungstermin'].match(date)
+        ? 'Ungültige Eingabe'
         : '',
       email: !formData['email']
         ? 'Bitte gib Deine E-Mail-Adresse an (Pflichtfeld)'
+        : !formData['email'].match(email)
+        ? 'Ungültige Eingabe'
         : '',
       strasse: !formData['strasse']
         ? 'Bitte gib Deine Straße und Hausnummer an (Pflichtfeld)'
         : '',
-      plz: !formData['plz'] ? 'Bitte gib Deine PLZ an (Pflichtfeld)' : '',
+      plz: !formData['plz']
+        ? 'Bitte gib Deine PLZ an (Pflichtfeld)'
+        : !formData['plz'].match(zip)
+        ? 'Ungültige Eingabe'
+        : '',
       ort: !formData['ort'] ? 'Bitte gib Deinen Ort an (Pflichtfeld)' : '',
       versicherungsart: !formData['versicherungsart']
         ? 'Bitte gib Deine Versicherungsart an (Pflichtfeld)'
         : '',
       kassenik: !formData['kassenik']
         ? 'Bitte gib Deine Versicherungsnummer (Kassen-IK) an (Pflichtfeld)'
+        : !formData['kassenik'].match(kassenik)
+        ? 'Ungültige Eingabe'
         : '',
       versichertennummer: !formData['versichertennummer']
         ? 'Bitte gib Deine Versichertennummer an (Pflichtfeld)'
@@ -112,14 +132,16 @@ export default function CourseBookingForm(props) {
     if (
       formData['vorname'] &&
       formData['nachname'] &&
-      formData['geburtsdatum'] &&
-      formData['email'] &&
+      formData['geburtsdatum'].match(date) &&
+      formData['entbindungstermin'].match(date) &&
+      formData['email'].match(email) &&
       formData['strasse'] &&
-      formData['plz'] &&
+      formData['plz'].match(zip) &&
       formData['ort'] &&
       formData['versicherungsart'] &&
-      (formData['versicherungsart'] === 'privat' ||
-        (formData['versichertennummer'] && formData['kassenik'])) &&
+      (formData['versicherungsart'] !== 'G' ||
+        (formData['versichertennummer'] &&
+          formData['kassenik'].match(kassenik))) &&
       termsAccepted
     ) {
       setButtonContent('Wird gesendet...');
@@ -251,7 +273,7 @@ export default function CourseBookingForm(props) {
               name="entbindungstermin"
               placeholder="..."
               onChange={handleDateChange}
-              warning={formDataError.ort}
+              warning={formDataError.entbindungstermin}
             />
             {formDataError.entbindungstermin && (
               <Error>{formDataError.entbindungstermin}</Error>
@@ -264,7 +286,7 @@ export default function CourseBookingForm(props) {
                 Gesetzlich{' '}
                 <input
                   type="radio"
-                  id="gesetzlich"
+                  id="G"
                   name="versicherungsart"
                   onChange={handleRadioChange}
                 />
@@ -273,7 +295,7 @@ export default function CourseBookingForm(props) {
                 Privat{' '}
                 <input
                   type="radio"
-                  id="privat"
+                  id="P"
                   name="versicherungsart"
                   onChange={handleRadioChange}
                 />
@@ -283,7 +305,7 @@ export default function CourseBookingForm(props) {
               <Error>{formDataError.versicherungsart}</Error>
             )}
           </FormItem>
-          {formData.versicherungsart === 'gesetzlich' && (
+          {formData.versicherungsart === 'G' && (
             <>
               <FormItem>
                 <Label htmlFor="kassenik">
