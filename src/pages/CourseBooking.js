@@ -2,18 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
+import CourseBookingForm from '../components/CourseBookingForm';
 import useQuery from '../helpers/useQuery';
 
-export default function CourseBooking() {
+export default function CourseBooking(props) {
+  const { setSendingStatus, sendingStatus } = props;
+
   const query = useQuery();
 
   const id = query.get('id');
   const title = query.get('title');
+  const startDate = query.get('startDate');
 
-  return query.get('id') !== '-1' ? (
-    <Container>
-      Ausgewählter Kurs: {title} ({id})
-    </Container>
+  return query.get('id') ? (
+    <>
+      <CourseBookingForm
+        courseId={id}
+        courseTitle={title}
+        courseStartDate={startDate}
+        sendingStatus={sendingStatus}
+        setSendingStatus={setSendingStatus}
+      />
+    </>
   ) : (
     <Container>
       <Text>Es wurde kein Kurs ausgewählt.</Text>
