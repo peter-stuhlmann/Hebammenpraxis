@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import Button from './Button';
 import CloseButton from './CloseButton';
@@ -24,6 +24,7 @@ export default function ContactForm(props) {
     gravida: '',
     para: '',
     message: '',
+    terms: false,
   });
 
   const [formDataError, setFormDataError] = useState(false);
@@ -32,6 +33,13 @@ export default function ContactForm(props) {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleCheckChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.checked,
     });
   };
 
@@ -55,7 +63,8 @@ export default function ContactForm(props) {
       formData['name'] &&
       formData['address'] &&
       formData['email'] &&
-      formData['delivery']
+      formData['delivery'] &&
+      formData['terms']
     ) {
       setButtonContent('Wird gesendet...');
 
@@ -84,7 +93,7 @@ export default function ContactForm(props) {
               können, wenn sie vollständig ausgefüllt ist.
             </Note>
           </Flex>
-          <Info>Aktuell erst wieder Plätze ab ET im November 2022!</Info>
+          <Info>Aktuell erst wieder Plätze ab ET im September 2022!</Info>
           <form onSubmit={handleSubmit}>
             <Flex>
               <Column>
@@ -136,7 +145,7 @@ export default function ContactForm(props) {
                 <FormItem>
                   <Label htmlFor="delivery">ET</Label>
                   <Input
-                    type="text"
+                    type="date"
                     name="delivery"
                     placeholder="..."
                     onChange={handleChange}
@@ -174,15 +183,28 @@ export default function ContactForm(props) {
                   />
                 </FormItem>
               </Column>
-              <Column>
-                <Button
-                  onClick={handleSubmit}
-                  style={{ marginTop: '40px' }}
-                  disabled={buttonContent === 'Wird gesendet...'}
-                >
-                  {buttonContent}
-                </Button>
-              </Column>
+              <Check>
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="terms"
+                  onChange={handleCheckChange}
+                />
+                <label htmlFor="terms">
+                  Ich habe die{' '}
+                  <Link to="/impressum">AGB und Teilnahmebedingungen</Link> und
+                  die{' '}
+                  <Link to="/datenschutzerklaerung">Datenschutzerklärung</Link>{' '}
+                  gelesen, zur Kenntnis genommen und bin damit einverstanden
+                </label>
+              </Check>
+              <Button
+                onClick={handleSubmit}
+                style={{ marginTop: '40px' }}
+                disabled={buttonContent === 'Wird gesendet...'}
+              >
+                {buttonContent}
+              </Button>
             </Flex>
           </form>
         </>
@@ -317,6 +339,20 @@ const TextArea = styled.textarea`
     font-family: Gilroy;
     letter-spacing: 1.7px;
     color: #a49194;
+  }
+`;
+
+const Check = styled.div`
+  display: flex;
+  align-items: center;
+  color: #fff;
+
+  label {
+    margin-left: 10px;
+  }
+
+  a {
+    color: #fff;
   }
 `;
 
