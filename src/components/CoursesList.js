@@ -6,66 +6,95 @@ import LoadingSpinner from './LoadingSpinner';
 
 import monthNameGenerator from '../helpers/monthNameGenerator';
 
+import content from '../data/courses.js';
+import courseTemplates from '../data/courseTemplates.js';
+
 export default function CoursesList(props) {
   const { setContactFormVisibility } = props;
 
   const [courses, setCourses] = useState(null);
-  const [selectedCourse, setSelectedCourse] = useState({ id: '-1' });
 
-  const [formData, setFormData] = useState({
-    user: '1',
-    idArt: '0001',
-    idVorlage: '1',
-  });
-
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
+  const requestOptions = (formData) => {
+    return {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    };
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER}/get-courses`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setCourses(data.kursarten[0].vorlagen[0].kurse);
+    Promise.all(
+      courseTemplates.map((template) => {
+        return fetch(
+          `${process.env.REACT_APP_SERVER}/get-courses`,
+          requestOptions(template)
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            return data.kursarten[0].vorlagen[0].kurse;
+          })
+          .catch((error) => console.log(error));
       })
-      .catch((error) => console.log(error));
+    ).then((all) => {
+      const allCourses = all.flat();
+
+      // sort by date
+      allCourses.sort(function (a, b) {
+        const keyA = `${a.ersterTermin.slice(6, 10)}-${a.ersterTermin.slice(
+          3,
+          5
+        )}-${a.ersterTermin.slice(0, 2)}`;
+
+        const keyB = `${b.ersterTermin.slice(6, 10)}-${b.ersterTermin.slice(
+          3,
+          5
+        )}-${b.ersterTermin.slice(0, 2)}`;
+
+        if (keyA < keyB) {
+          return -1;
+        }
+        if (keyA > keyB) {
+          return 1;
+        }
+        return 0;
+      });
+
+      setCourses(allCourses);
+    });
   }, []);
 
   return (
     <Container>
       <Wrapper>
         <Column>
-          <Heading>Kurse</Heading>
-          <Text>
-            Die Schwangerschaft ist ein besonderer Lebensabschnitt mit
-            wunderbaren und intensiven Augenblicken. Wir unterstützen dich
-            sorgsam während der Zeit deines wachsenden Bauches und den damit
-            verbundenen Veränderungen.
-          </Text>
+          <Heading>{content.coursesList.heading}</Heading>
+          <Text>{content.coursesList.text}</Text>
           <Image
-            src="https://image-placeholder.vercel.app/?w=536&h=685"
-            alt=""
+            src={content.coursesList.img.src}
+            alt={content.coursesList.img.description}
           />
         </Column>
         <Column>
           {courses ? (
             <List>
               {courses.map((course) => (
-                <ListItem
-                  key={course.id}
-                  onClick={() => setSelectedCourse(course)}
-                >
+                <ListItem key={course.id}>
                   <Name>{course.bezeichnung}</Name>
-                  <Date>
-                    {course.ersterTermin.slice(0, 2)}.{' '}
-                    {monthNameGenerator(course.ersterTermin.slice(3, 5))}{' '}
-                    {' - '}
-                    {course.vonUhrzeit.slice(0, 5)}
-                    {' - '}
-                    {course.bisUhrzeit.slice(0, 5)} Uhr
-                  </Date>
+                  <div>
+                    <Date>
+                      {course.ersterTermin.slice(0, 2)}.{' '}
+                      {monthNameGenerator(course.ersterTermin.slice(3, 5))}{' '}
+                      {' - '}
+                      {course.vonUhrzeit.slice(0, 5)}
+                      {' - '}
+                      {course.bisUhrzeit.slice(0, 5)} Uhr
+                    </Date>
+                    <Button
+                      href={`${content.coursesList.button[0].href}?id=${course.id}&title=${course.bezeichnung}&startDate=${course.ersterTermin}`}
+                    >
+                      {content.coursesList.button[0].text}
+                    </Button>
+                  </div>
                 </ListItem>
               ))}
             </List>
@@ -74,12 +103,10 @@ export default function CoursesList(props) {
           )}
           <ButtonContainer>
             <Button
-              href={`/kurs-buchen?id=${selectedCourse.id}&title=${selectedCourse.bezeichnung}`}
+              href={content.coursesList.button[1].href}
+              onClick={() => setContactFormVisibility(true)}
             >
-              Kurs buchen
-            </Button>
-            <Button href="/" onClick={() => setContactFormVisibility(true)}>
-              Kontaktformular
+              {content.coursesList.button[1].text}
             </Button>
           </ButtonContainer>
         </Column>
@@ -170,9 +197,24 @@ const ListItem = styled.li`
   border-bottom: 2px solid #707070;
   padding: 71px 0;
   cursor: pointer;
+
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 1400px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      a {
+        margin-top: 30px;
+      }
+    }
+  }
 `;
 
-const Name = styled.div`
+const Name = styled.span`
   font-family: Josefin Slab;
   font-size: clamp(30px, 5vw, 70px);
   line-height: clamp(37px, 5vw, 85px);

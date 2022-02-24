@@ -11,7 +11,12 @@ export default function Courses(props) {
 
   return (
     <>
-      <ImageBanner content={courses.banner} height="659px" textWidth="1475px" />
+      <ImageBanner
+        content={courses.banner}
+        height="659px"
+        textWidth="1475px"
+        backgroundColor="#bfb1b4"
+      />
       <CoursesList setContactFormVisibility={setContactFormVisibility} />
       {courses.article.map((course, i) => (
         <Article key={i} content={course} buttonColor={['#E3E0D4', '#fff']} />
