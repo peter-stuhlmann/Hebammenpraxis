@@ -41,7 +41,9 @@ const Container = styled.section`
 `;
 
 const Entry = styled.div`
-  padding: 110px 15px;
+  width: 1670px;
+  margin: 0 auto;
+  padding: 110px 0;
   box-sizing: border-box;
   border-bottom: 2px solid ${(props) => (props.alternate ? '#fff' : '#707070')};
   display: flex;

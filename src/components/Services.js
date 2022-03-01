@@ -45,14 +45,15 @@ export default function Services(props) {
 
 const Container = styled.section`
   background-color: #e3e0d4;
-  padding: 0 15px;
-  box-sizing: border-box;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  padding: 110px 0;
+  padding: 110px 15px;
+  width: 1670px;
+  box-sizing: border-box;
+  margin: 0 auto;
 `;
 
 const Heading = styled.h2`
