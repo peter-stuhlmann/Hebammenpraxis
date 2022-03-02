@@ -8,7 +8,8 @@ export default function PrivacyPolicy() {
     <Section>
       <Container>
         <Heading dangerouslySetInnerHTML={{ __html: privacyPolicy.heading }} />
-        <Text dangerouslySetInnerHTML={{ __html: privacyPolicy.text }} />
+        <Text dangerouslySetInnerHTML={{ __html: privacyPolicy.text[0] }} />
+        <Text s dangerouslySetInnerHTML={{ __html: privacyPolicy.text[1] }} />
       </Container>
     </Section>
   );
@@ -40,4 +41,17 @@ const Text = styled.div`
   line-height: 48px;
   font-family: Josefin Slab;
   color: #fff;
+
+  ${(props) =>
+    props.s &&
+    `
+      font-size: 22px;
+      line-height: 30px;
+      font-family: Gilroy;
+    `}
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
 `;
