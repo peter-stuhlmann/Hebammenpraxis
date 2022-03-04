@@ -51,7 +51,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   padding: 110px 15px;
-  width: 1670px;
+  width: 100%;
+  max-width: 1670px;
   box-sizing: border-box;
   margin: 0 auto;
 `;

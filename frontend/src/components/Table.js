@@ -1,33 +1,55 @@
 import React from 'react';
 import styled from 'styled-components';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function Table(props) {
-  const { content, alternate } = props;
+  const { content, heading, alternate } = props;
 
   return (
     <Container alternate={alternate}>
-      {content.map((entry) => (
-        <Entry key={entry.content.heading} alternate={alternate}>
-          <Content>
-            <Heading alternate={alternate}>{entry.heading}</Heading>
-            <Description
-              alternate={alternate}
-              dangerouslySetInnerHTML={{ __html: entry.description }}
-              style={{ maxWidth: '400px' }}
-            />
-          </Content>
-          <Content large>
-            <Heading
-              alternate={alternate}
-              dangerouslySetInnerHTML={{ __html: entry.content.heading }}
-            />
-            <Description
-              alternate={alternate}
-              dangerouslySetInnerHTML={{ __html: entry.content.description }}
-            />
-          </Content>
+      {content ? (
+        content !== 'error' ? (
+          content.map((entry) => (
+            <Entry key={entry.content.heading} alternate={alternate}>
+              <Content>
+                <Heading alternate={alternate}>{entry.heading}</Heading>
+                <Description
+                  alternate={alternate}
+                  dangerouslySetInnerHTML={{ __html: entry.description }}
+                  style={{ maxWidth: '400px' }}
+                />
+              </Content>
+              <Content large>
+                <Heading
+                  alternate={alternate}
+                  dangerouslySetInnerHTML={{ __html: entry.content.heading }}
+                />
+                <Description
+                  alternate={alternate}
+                  dangerouslySetInnerHTML={{
+                    __html: entry.content.description,
+                  }}
+                />
+              </Content>
+            </Entry>
+          ))
+        ) : (
+          <Entry alternate={alternate}>
+            <Content>
+              <Heading alternate={alternate}>{heading}</Heading>
+            </Content>
+            <Content>
+              <Description alternate={alternate}>
+                Daten konnten nicht geladen werden.
+              </Description>
+            </Content>
+          </Entry>
+        )
+      ) : (
+        <Entry alternate={alternate}>
+          <LoadingSpinner height="auto" />
         </Entry>
-      ))}
+      )}
     </Container>
   );
 }
@@ -41,7 +63,8 @@ const Container = styled.section`
 `;
 
 const Entry = styled.div`
-  width: 1670px;
+  width: 100%;
+  max-width: 1670px;
   margin: 0 auto;
   padding: 110px 0;
   box-sizing: border-box;

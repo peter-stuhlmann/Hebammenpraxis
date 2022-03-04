@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 
 import Button from './Button';
 import CloseButton from './CloseButton';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function ContactForm(props) {
   const {
@@ -13,6 +14,22 @@ export default function ContactForm(props) {
     sendingStatus,
     setSendingStatus,
   } = props;
+
+  const [loading, setLoading] = useState(true);
+  const [infoText, setInfoText] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_WP_SERVER}/info-text`)
+      .then((res) => {
+        setInfoText(res.data[0].title.rendered);
+        setLoading(false);
+      })
+      .catch(() => {
+        setInfoText(null);
+        setLoading(false);
+      });
+  }, []);
 
   const [buttonContent, setButtonContent] = useState('Absenden');
 
@@ -93,7 +110,7 @@ export default function ContactForm(props) {
               können, wenn sie vollständig ausgefüllt ist.
             </Note>
           </Flex>
-          <Info>Aktuell erst wieder Plätze ab ET im September 2022!</Info>
+          {loading ? <LoadingSpinner height="auto" /> : <Info>{infoText}</Info>}
           <form onSubmit={handleSubmit}>
             <Flex>
               <Column>

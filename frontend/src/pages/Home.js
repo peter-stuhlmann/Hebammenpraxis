@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import FlexLayout from '../components/FlexLayout';
 import CenteredTextBox from '../components/CenteredTextBox';
@@ -16,6 +17,28 @@ export default function Home(props) {
     sendingStatus,
     setSendingStatus,
   } = props;
+
+  const [events, setEvents] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_WP_SERVER}/events`)
+      .then((res) => {
+        const events = res.data.map((item, index) => {
+          return {
+            heading: index === 0 ? 'Aktuelles' : '',
+            content: {
+              heading: item.title.rendered,
+              description: item.content.rendered || '',
+            },
+          };
+        });
+        setEvents(events);
+      })
+      .catch(() => {
+        setEvents('error');
+      });
+  }, []);
 
   return (
     <>
@@ -39,7 +62,7 @@ export default function Home(props) {
         margin="0 auto 374px auto"
       />
       <Services content={home.services} />
-      <Table content={home.news} />
+      <Table content={events} heading="Aktuelles" />
       <FAQ content={home.faq} />
     </>
   );
