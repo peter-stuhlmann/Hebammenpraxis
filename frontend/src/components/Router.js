@@ -1,6 +1,8 @@
 import React, { useEffect, lazy } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
+// import useAnalytics from '../helpers/useAnalytics';
+
 const Home = lazy(() => import('../pages/Home'));
 const About = lazy(() => import('../pages/About'));
 const Contact = lazy(() => import('../pages/Contact'));
@@ -20,6 +22,8 @@ export default function Router(props) {
     sendingStatus,
     setSendingStatus,
   } = props;
+
+  // useAnalytics(process.env.REACT_APP_GA);
 
   const { pathname } = useLocation();
 

@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Router from './components/Router';
 import Footer from './components/Footer';
 import LoadingSpinner from './components/LoadingSpinner';
+// import CookieConsentBanner from './components/CookieConsent';
 
 export default function App() {
   const [contactFormVisibility, setContactFormVisibility] = useState(false);
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingSpinner />}>
+        {/* <CookieConsentBanner /> */}
         <Header
           contactFormVisibility={contactFormVisibility}
           setContactFormVisibility={setContactFormVisibility}
