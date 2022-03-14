@@ -1,13 +1,15 @@
 {
-  "name": "nodemailer",
+  "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Peter R. Stuhlmann",
+    "email": "info@peter-stuhlmann.de",
+    "url": "https://peter-stuhlmann-webentwicklung.de"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.26.0",
@@ -15,7 +17,6 @@
     "cors": "^2.8.5",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
-    "googleapis": "^94.0.0",
     "nodemailer": "^6.7.2"
   },
   "devDependencies": {
