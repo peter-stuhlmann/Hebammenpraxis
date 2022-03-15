@@ -104,11 +104,7 @@ export default function ContactForm(props) {
         <>
           <CloseButton onClick={() => setContactFormVisibility(false)} />
           <Flex>
-            <Heading>Betreuungsanfrage*</Heading>
-            <Note>
-              *Bitte beachten Sie, dass wir schneller auf ihre Anfrage reagieren
-              können, wenn sie vollständig ausgefüllt ist.
-            </Note>
+            <Heading>Betreuungsanfrage</Heading>
           </Flex>
           {loading ? <LoadingSpinner height="auto" /> : <Info>{infoText}</Info>}
           <form onSubmit={handleSubmit}>
@@ -262,19 +258,6 @@ const Heading = styled.h2`
   font-weight: normal;
   color: #fff;
   margin: 0 47px 47px 0;
-`;
-
-const Note = styled.div`
-  font-size: 17px;
-  line-height: 20px;
-  font-family: Gilroy;
-  letter-spacing: 1.7px;
-  color: #fff;
-  max-width: 395px;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-  }
 `;
 
 const Info = styled.div`
