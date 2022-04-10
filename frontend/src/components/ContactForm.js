@@ -37,6 +37,7 @@ export default function ContactForm(props) {
     name: '',
     address: '',
     email: '',
+    phone: '',
     delivery: '',
     gravida: '',
     para: '',
