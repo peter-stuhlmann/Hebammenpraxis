@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from './Button';
+import Course from './CoursesListItem';
 import LoadingSpinner from './LoadingSpinner';
-
-import monthNameGenerator from '../helpers/monthNameGenerator';
 
 import content from '../data/courses.js';
 import courseTemplates from '../data/courseTemplates.js';
@@ -31,35 +30,15 @@ export default function CoursesList(props) {
         )
           .then((response) => response.json())
           .then((data) => {
-            return data.kursarten[0].vorlagen[0].kurse;
+            return {
+              heading: data.kursarten[0].name,
+              courses: data.kursarten[0].vorlagen[0].kurse,
+            };
           })
           .catch((error) => console.log(error));
       })
     ).then((all) => {
-      const allCourses = all.flat();
-
-      // sort by date
-      allCourses.sort(function (a, b) {
-        const keyA = `${a.ersterTermin.slice(6, 10)}-${a.ersterTermin.slice(
-          3,
-          5
-        )}-${a.ersterTermin.slice(0, 2)}`;
-
-        const keyB = `${b.ersterTermin.slice(6, 10)}-${b.ersterTermin.slice(
-          3,
-          5
-        )}-${b.ersterTermin.slice(0, 2)}`;
-
-        if (keyA < keyB) {
-          return -1;
-        }
-        if (keyA > keyB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      setCourses(allCourses);
+      setCourses(all);
     });
   }, []);
 
@@ -76,28 +55,15 @@ export default function CoursesList(props) {
         </Column>
         <Column>
           {courses ? (
-            <List>
-              {courses.map((course) => (
-                <ListItem key={course.id}>
-                  <Name>{course.bezeichnung}</Name>
-                  <div>
-                    <Date>
-                      {course.ersterTermin.slice(0, 2)}.{' '}
-                      {monthNameGenerator(course.ersterTermin.slice(3, 5))}{' '}
-                      {' - '}
-                      {course.vonUhrzeit.slice(0, 5)}
-                      {' - '}
-                      {course.bisUhrzeit.slice(0, 5)} Uhr
-                    </Date>
-                    <Button
-                      href={`${content.coursesList.button[0].href}?id=${course.id}&title=${course.bezeichnung}&startDate=${course.ersterTermin}`}
-                    >
-                      {content.coursesList.button[0].text}
-                    </Button>
-                  </div>
-                </ListItem>
-              ))}
-            </List>
+            courses.map((template, index) => (
+              <List key={index}>
+                {template.courses.length
+                  ? template.courses.map((course, i) => (
+                      <Course key={i} course={course} content={content} />
+                    ))
+                  : 'Keine Kurse gefunden.'}
+              </List>
+            ))
           ) : (
             <LoadingSpinner />
           )}
@@ -148,6 +114,7 @@ const Column = styled.div`
   &:last-child {
     flex: 0 0 calc(67% - 100px);
     margin-left: 100px;
+    margin-top: 155px;
 
     @media (max-width: 1000px) {
       flex: 0 0 50%;
@@ -187,46 +154,10 @@ const Image = styled.img`
 const List = styled.ul`
   width: 100%;
   max-width: 900px;
-  margin: 175px auto 0 auto;
+  margin: 0 auto;
   padding: 15px;
   box-sizing: border-box;
   list-style-type: none;
-`;
-
-const ListItem = styled.li`
-  border-bottom: 2px solid #707070;
-  padding: 71px 0;
-  cursor: pointer;
-
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    @media (max-width: 1400px) {
-      flex-direction: column;
-      align-items: flex-start;
-
-      a {
-        margin-top: 30px;
-      }
-    }
-  }
-`;
-
-const Name = styled.span`
-  font-family: Josefin Slab;
-  font-size: clamp(30px, 5vw, 70px);
-  line-height: clamp(37px, 5vw, 85px);
-  font-weight: normal;
-  margin: 0 0 46px 0;
-`;
-
-const Date = styled.div`
-  color: #000;
-  font-size: 40px;
-  line-height: 48px;
-  font-family: Josefin Slab;
 `;
 
 const ButtonContainer = styled.div`

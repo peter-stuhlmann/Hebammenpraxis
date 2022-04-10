@@ -10,6 +10,7 @@ export default function CourseBookingForm(props) {
     courseId,
     courseTitle,
     courseStartDate,
+    courseDescription,
     sendingStatus,
     setSendingStatus,
   } = props;
@@ -165,6 +166,11 @@ export default function CourseBookingForm(props) {
           <Info>
             "{courseTitle}" am {formattedCourseStartDate}
           </Info>
+          {courseDescription && (
+            <Description
+              dangerouslySetInnerHTML={{ __html: courseDescription }}
+            />
+          )}
         </Column>
         <Column>
           <FormItem>
@@ -500,6 +506,14 @@ const Info = styled.div`
   font-size: clamp(26px, 5vw, 40px);
   line-height: clamp(32px, 5vw, 48px);
   font-family: Josefin Slab;
+  color: #fff;
+  margin-bottom: 55px;
+`;
+
+const Description = styled.div`
+  font-size: 20px;
+  line-height: 23px;
+  font-family: Gilroy;
   color: #fff;
   margin-bottom: 55px;
 `;

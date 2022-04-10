@@ -13,6 +13,7 @@ export default function CourseBooking(props) {
   const id = query.get('id');
   const title = query.get('title');
   const startDate = query.get('startDate');
+  const description = query.get('description');
 
   return query.get('id') ? (
     <>
@@ -20,6 +21,7 @@ export default function CourseBooking(props) {
         courseId={id}
         courseTitle={title}
         courseStartDate={startDate}
+        courseDescription={description}
         sendingStatus={sendingStatus}
         setSendingStatus={setSendingStatus}
       />
