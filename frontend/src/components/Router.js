@@ -14,6 +14,7 @@ const NotFound = lazy(() => import('../pages/NotFound'));
 const Practice = lazy(() => import('../pages/Practice'));
 const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
 const Services = lazy(() => import('../pages/Services'));
+const Terms = lazy(() => import('../pages/Terms'));
 
 export default function Router(props) {
   const {
@@ -58,6 +59,7 @@ export default function Router(props) {
       <Route exact path="/kontakt" component={Contact} />
       <Route exact path="/impressum" component={LegalNotice} />
       <Route exact path="/datenschutzerklaerung" component={PrivacyPolicy} />
+      <Route exact path="/agb" component={Terms} />
       <Route exact path="/nachricht-gesendet">
         <SendingStatus
           setSendingStatus={setSendingStatus}

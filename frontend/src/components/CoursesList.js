@@ -57,8 +57,9 @@ export default function CoursesList(props) {
           {courses ? (
             courses.map((template, index) => (
               <List key={index}>
-                {template.courses.length
-                  ? template.courses.map((course, i) => (
+                {template
+                  ? template.courses.length &&
+                    template.courses.map((course, i) => (
                       <Course key={i} course={course} content={content} />
                     ))
                   : 'Keine Kurse gefunden.'}

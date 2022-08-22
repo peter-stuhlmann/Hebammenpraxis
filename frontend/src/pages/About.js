@@ -23,6 +23,7 @@ export default function About() {
         backgroundColor="#B6A9AB"
         textColor="#fff"
       />
+      <Article content={about.article[4]} />
     </>
   );
 }
