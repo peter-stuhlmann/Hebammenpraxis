@@ -8,6 +8,15 @@ import monthNameGenerator from '../helpers/monthNameGenerator';
 export default function CourseesListItem(props) {
   const { course, content } = props;
 
+  let places;
+  if (course.anzahlPlaetze === 'Ausgebucht') {
+    places = 'Keine Plätze mehr verfügbar.';
+  } else if (course.anzahlPlaetze === '1') {
+    places = 'Noch 1 Platz verfügbar.';
+  } else {
+    places = `Noch ${course.anzahlPlaetze} Plätze verfügbar.`;
+  }
+
   return (
     <ListItem key={course.id}>
       <Name>{course.bezeichnung}</Name>
@@ -20,13 +29,7 @@ export default function CourseesListItem(props) {
             {' - '}
             {course.bisUhrzeit.slice(0, 5)} Uhr
           </Date>
-          <Availability>
-            {course.anzahlPlaetze > 0 ? (
-              <>Noch {course.anzahlPlaetze} Plätze verfügbar.</>
-            ) : (
-              <>Keine Plätze mehr verfügbar.</>
-            )}
-          </Availability>
+          <Availability>{places}</Availability>
         </div>
         <Button
           href={`${content.coursesList.button[0].href}?id=${course.id}&title=${course.bezeichnung}&startDate=${course.ersterTermin}&description=${course.beschreibung}`}
