@@ -206,8 +206,7 @@ export default function ContactForm(props) {
                 />
                 <label htmlFor="terms">
                   Ich habe die{' '}
-                  <Link to="/impressum">AGB und Teilnahmebedingungen</Link> und
-                  die{' '}
+                  <Link to="/agb">AGB und Teilnahmebedingungen</Link> und die{' '}
                   <Link to="/datenschutzerklaerung">Datenschutzerklärung</Link>{' '}
                   gelesen, zur Kenntnis genommen und bin damit einverstanden
                 </label>

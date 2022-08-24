@@ -353,8 +353,8 @@ export default function CourseBookingForm(props) {
               onChange={(e) => setTermsAccepted(e.target.checked)}
             />
             <label htmlFor="agb">
-              Ich habe die{' '}
-              <Link to="/impressum">AGB und Teilnahmebedingungen</Link> und die{' '}
+              Ich habe die <Link to="/agb">AGB und Teilnahmebedingungen</Link>{' '}
+              und die{' '}
               <Link to="/datenschutzerklaerung">Datenschutzerklärung</Link>{' '}
               gelesen, zur Kenntnis genommen und bin damit einverstanden
             </label>
